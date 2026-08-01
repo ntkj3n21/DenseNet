@@ -59,6 +59,23 @@ can use different transforms. Both wrappers reference the same underlying
 official training split and are restricted by the same manifest indices. The
 official test set is not used during training or model selection.
 
+### DataLoader protocol
+
+The training loader uses `shuffle=True`. Validation and test use
+`shuffle=False` and `drop_last=False`, preserving sequential dataset order and
+all evaluation samples. All three loaders use `worker_init_fn=seed_worker` and
+an independently seeded `torch.Generator`; no global generator is shared.
+
+Generator state advances when a loader is iterated. Exact checkpoint resume
+must eventually save and restore the training generator state. The caller must
+seed the process before constructing the model and loaders. The test loader
+must not be used during training or model selection.
+
+Batch sizes and runtime worker settings will be locked in the experiment
+configuration during the training-protocol phase. Exact reproducibility across
+PyTorch versions, hardware, and operating-system platforms is not guaranteed,
+so every run must record environment metadata.
+
 ## Planned protocol
 
 1. CIFAR-10 will be the first dataset.

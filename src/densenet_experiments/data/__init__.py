@@ -1,6 +1,7 @@
 """Dataset and split utilities exposed by the package."""
 
 from .cifar10 import CIFAR10Datasets, build_cifar10_datasets
+from .loaders import CIFAR10DataLoaders, build_cifar10_dataloaders
 from .splits import (
     SplitManifest,
     compute_labels_sha256,
@@ -18,6 +19,8 @@ from .transforms import (
 __all__ = [
     "CIFAR10Datasets",
     "build_cifar10_datasets",
+    "CIFAR10DataLoaders",
+    "build_cifar10_dataloaders",
     "CIFAR10_MEAN",
     "CIFAR10_STD",
     "build_cifar10_train_transform",
