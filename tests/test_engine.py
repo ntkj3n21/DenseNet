@@ -148,6 +148,10 @@ class SingleItemDataset(Dataset):
         return self.item
 
 
+def _return_single_item(batch: list[object]) -> object:
+    return batch[0]
+
+
 @pytest.mark.parametrize(
     "item, message",
     [
@@ -157,7 +161,9 @@ class SingleItemDataset(Dataset):
     ],
 )
 def test_invalid_batch_fails(item: object, message: str) -> None:
-    loader = DataLoader(SingleItemDataset(item), batch_size=1)
+    loader = DataLoader(
+        SingleItemDataset(item), batch_size=1, collate_fn=_return_single_item
+    )
     with pytest.raises(ValueError, match=message):
         evaluate(_model(), loader, torch.nn.CrossEntropyLoss(), "cpu")
 
