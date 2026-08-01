@@ -29,9 +29,13 @@ env/
 *.h5
 
 # Datasets
-data/
-dataset/
-datasets/
+/data/
+/dataset/
+/datasets/
+
+# Experiment outputs
+outputs/*
+!outputs/README.md
 
 # OS
 .DS_Store
