@@ -32,13 +32,21 @@ The official CIFAR-10 training set will be divided into 45,000 training samples
 and 5,000 validation samples. The split will be equally stratified across all
 10 classes, assigning 500 validation samples to each class, with split seed 42.
 
-The generated split manifest will store the exact train and validation indices
-plus a checksum of the ordered labels. All four ablation variants will use the
-same manifest.
+The authoritative source of train and validation indices is the verified
+manifest at `configs/splits/cifar10_seed42.json`. All four ablation variants
+must load this exact manifest.
 
-The official test set will remain unchanged and will be used only for final
-evaluation. It must not be used to select an epoch, checkpoint, or model
-variant.
+- Manifest SHA-256: `454a6d5f3a72d6881c32343afb7c9c147ac018650dfe8ba1946205f386ef5557`
+- Ordered-labels SHA-256: `a3a0d804911c71de4b73015af980e237de5f82da7b1482a8efaf7adcc1722f45`
+
+Official training must load the split with
+`create_manifest_if_missing=False`. The run must stop if the manifest
+checksum, ordered-label checksum, split seed, or validation size does not
+match the locked protocol.
+
+The official test set is not part of the manifest. It will remain unchanged
+and will be used only for final evaluation. It must not be used to select an
+epoch, checkpoint, or model variant.
 
 ### Transform protocol
 
