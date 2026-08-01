@@ -40,6 +40,17 @@ The official test set will remain unchanged and will be used only for final
 evaluation. It must not be used to select an epoch, checkpoint, or model
 variant.
 
+### Transform protocol
+
+Training uses a random 32x32 crop with padding 4, random horizontal flip,
+tensor conversion, and CIFAR-10 normalization. Validation and test use tensor
+conversion and the same normalization without stochastic augmentation.
+
+Training and validation are constructed as separate dataset wrappers so they
+can use different transforms. Both wrappers reference the same underlying
+official training split and are restricted by the same manifest indices. The
+official test set is not used during training or model selection.
+
 ## Planned protocol
 
 1. CIFAR-10 will be the first dataset.
@@ -58,4 +69,6 @@ variant.
 
 ## Decisions pending protocol lock
 
-The optimizer, learning rate, number of epochs, and augmentation policy are intentionally unspecified at this stage. These values will be selected, documented, and locked in the next protocol phase before official experiments begin.
+The optimizer, learning rate, and number of epochs are intentionally
+unspecified at this stage. These values will be selected, documented, and
+locked in the next protocol phase before official experiments begin.

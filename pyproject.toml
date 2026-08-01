@@ -7,6 +7,14 @@ name = "densenet-experiments"
 version = "0.1.0"
 description = "A reproducible DenseNet-40 ablation study of Mish activation and Squeeze-and-Excitation."
 requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "torch",
+    "torchvision",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
 
 [tool.setuptools]
 package-dir = {"" = "src"}
