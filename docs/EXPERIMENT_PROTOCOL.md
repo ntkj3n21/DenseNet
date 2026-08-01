@@ -76,6 +76,19 @@ configuration during the training-protocol phase. Exact reproducibility across
 PyTorch versions, hardware, and operating-system platforms is not guaranteed,
 so every run must record environment metadata.
 
+## Training engine protocol
+
+Epoch metrics consist of sample-weighted loss and top-1 accuracy. Validation
+runs with `model.eval()` under `torch.inference_mode()`, performs no backward
+pass, and must not modify model parameters. Evaluation restores the model's
+previous training or evaluation mode even when evaluation fails.
+
+An empty loader or non-finite loss is a fatal error. The official test set must
+not be evaluated during epoch training; it is reserved for final evaluation
+after validation has selected the best checkpoint. Optimizer, scheduler,
+learning rate, batch size, and epoch count remain unlocked at this stage.
+Mixed precision is not enabled in the current engine.
+
 ## Planned protocol
 
 1. CIFAR-10 will be the first dataset.
