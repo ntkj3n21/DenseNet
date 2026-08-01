@@ -1,0 +1,10 @@
+{
+  "dataset": "cifar10",
+  "official_train_size": 50000,
+  "train_size": 45000,
+  "validation_size": 5000,
+  "official_test_size": 10000,
+  "split_strategy": "stratified_equal_per_class",
+  "split_seed": 42,
+  "test_usage": "final_evaluation_only"
+}

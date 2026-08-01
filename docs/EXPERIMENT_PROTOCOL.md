@@ -26,6 +26,20 @@ The legacy implementation used compression 0.5. It is retained for historical re
 
 Only the activation and SE settings may differ across these variants. All other training and evaluation conditions must be shared.
 
+## CIFAR-10 data protocol
+
+The official CIFAR-10 training set will be divided into 45,000 training samples
+and 5,000 validation samples. The split will be equally stratified across all
+10 classes, assigning 500 validation samples to each class, with split seed 42.
+
+The generated split manifest will store the exact train and validation indices
+plus a checksum of the ordered labels. All four ablation variants will use the
+same manifest.
+
+The official test set will remain unchanged and will be used only for final
+evaluation. It must not be used to select an epoch, checkpoint, or model
+variant.
+
 ## Planned protocol
 
 1. CIFAR-10 will be the first dataset.
