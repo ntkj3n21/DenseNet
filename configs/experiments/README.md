@@ -1,10 +1,12 @@
 # Experiment Configurations
 
-The planned experiment configuration names are:
+The machine-readable ablation configurations are:
 
-- `baseline`
-- `mish`
-- `se`
-- `mish_se`
+- `baseline.json`: ReLU without Squeeze-and-Excitation.
+- `mish.json`: Mish without Squeeze-and-Excitation.
+- `se.json`: ReLU with Squeeze-and-Excitation.
+- `mish_se.json`: Mish with Squeeze-and-Excitation.
 
-No YAML or JSON experiment configuration is defined at this stage because the training protocol has not yet been locked.
+Only activation and SE usage differ. Architecture, dataset split, training
+protocol, and seed set must remain identical across all four variants. The
+legacy project and its reported accuracies are not evidence for this study.

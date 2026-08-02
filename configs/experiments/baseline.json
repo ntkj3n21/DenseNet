@@ -1,0 +1,14 @@
+{
+  "name": "baseline",
+  "activation": "relu",
+  "use_se": false,
+  "se_reduction": 16,
+  "model": {
+    "num_classes": 10,
+    "growth_rate": 12,
+    "block_config": [12, 12, 12],
+    "initial_channels": 16,
+    "compression": 1.0,
+    "drop_rate": 0.0
+  }
+}

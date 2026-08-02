@@ -1,0 +1,32 @@
+{
+  "run_name": "smoke",
+  "epochs": 1,
+  "seeds": [42],
+  "dataset_config": "configs/datasets/cifar10.json",
+  "split_manifest": "configs/splits/cifar10_seed42.json",
+  "train_batch_size": 128,
+  "eval_batch_size": 256,
+  "num_workers": 2,
+  "pin_memory": true,
+  "persistent_workers": true,
+  "drop_last_train": false,
+  "optimizer": {
+    "name": "sgd",
+    "learning_rate": 0.1,
+    "momentum": 0.9,
+    "nesterov": true,
+    "weight_decay": 0.0001
+  },
+  "scheduler": {
+    "name": "cosine_annealing",
+    "eta_min": 0.0,
+    "T_max": 1
+  },
+  "criterion": "cross_entropy",
+  "selection_metric": "validation_accuracy",
+  "selection_mode": "max",
+  "test_usage": "final_evaluation_only",
+  "deterministic": false,
+  "amp": false,
+  "grad_clip_norm": null
+}
