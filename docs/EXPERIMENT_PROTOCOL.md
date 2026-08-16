@@ -52,7 +52,7 @@ It is divided into:
 
 - 45,000 training samples
 - 5,000 validation samples
-- 10,000 untouched official test samples
+- 10,000 official test samples, excluded from the train/validation split
 
 The validation split is class-balanced with 500 validation examples from each
 of the 10 CIFAR-10 classes.
@@ -61,3 +61,15 @@ Split seed:
 
 ```text
 42
+```
+
+The official CIFAR-10 test set was not used during training, validation-based
+checkpoint selection, or comparison between the four variants.
+
+After the 50-epoch validation comparison was complete, Mish was selected
+because it achieved the highest validation accuracy. Its epoch-47 checkpoint
+was then evaluated once on the official test set as the final held-out
+evaluation.
+
+The other three variants were not evaluated on the official test set for
+comparison.

@@ -67,6 +67,7 @@ The machine-readable result is stored at:
 
 ```text
 results/extended_50/mish/test_metrics.json
+```
 
 ## Why This Study?
 
@@ -258,16 +259,21 @@ The main benchmark artifacts are available under:
 results/extended_50/
 ```
 
-Each variant contains:
-
-```markdown
 Each completed variant contains its training artifacts:
 
 ```text
 metrics.csv
 summary.json
+```
 
-Derived comparison files include:
+The validation-selected Mish model additionally contains the final held-out
+test artifact:
+
+```text
+results/extended_50/mish/test_metrics.json
+```
+
+Derived comparison artifacts include:
 
 ```text
 results/extended_50/summary.csv
@@ -303,9 +309,8 @@ pytest -q
 The reusable experiment framework is implemented under
 `src/densenet_experiments/`.
 
-The repository does not yet expose the framework through completed
-command-line training/evaluation scripts; `scripts/` currently documents the
-planned thin CLI wrappers.
+The `scripts/` directory contains lightweight utilities for regenerating
+benchmark summary tables and figures from the tracked experiment artifacts.
 
 ## Experiment Levels
 

@@ -159,6 +159,7 @@ The machine-readable evaluation artifact is stored at:
 
 ```text
 results/extended_50/mish/test_metrics.json
+```
 
 ## 9. Result Artifacts
 
@@ -174,9 +175,19 @@ results/
 │   └── summary.csv
 ├── extended_50/
 │   ├── baseline/
+│   │   ├── metrics.csv
+│   │   └── summary.json
 │   ├── mish/
+│   │   ├── metrics.csv
+│   │   ├── summary.json
+│   │   └── test_metrics.json
 │   ├── se/
+│   │   ├── metrics.csv
+│   │   └── summary.json
 │   ├── mish_se/
+│   │   ├── metrics.csv
+│   │   └── summary.json
 │   └── summary.csv
 ├── benchmark_summary.csv
 └── figures/
+```
