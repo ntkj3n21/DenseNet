@@ -15,6 +15,7 @@ dependencies = [
 
 [project.optional-dependencies]
 test = ["pytest"]
+analysis = ["matplotlib"]
 
 [tool.setuptools]
 package-dir = {"" = "src"}
