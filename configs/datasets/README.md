@@ -1,6 +1,6 @@
 # Dataset Configurations
 
-CIFAR-10 will be the first dataset supported by the new experimental pipeline.
+CIFAR-10 is the dataset used by the current experimental pipeline and completed benchmark.
 
 "cifar10.json" locks the train/validation sizes, split seed, normalization, and
 transform protocol. Training uses a 32x32 random crop with padding 4 followed
