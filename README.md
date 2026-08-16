@@ -15,9 +15,12 @@ architecture, optimizer, scheduler, and random seed:
 
 The main completed benchmark trains each variant for **50 epochs using seed 42**.
 
-> **Best result:** Mish reached **92.48% validation accuracy at epoch 47**,
-> improving over the ReLU baseline by **+0.62 percentage points** without
-> increasing the model parameter count.
+> **Validation-selected model:** Mish reached **92.48% validation accuracy at
+> epoch 47**, improving over the ReLU baseline by **+0.62 percentage points**
+> without increasing the model parameter count.
+>
+> The preselected Mish checkpoint was then evaluated once on the official
+> CIFAR-10 test set, achieving **91.28% test accuracy**.
 
 ![50-epoch validation accuracy](results/figures/validation_accuracy_50.png)
 
@@ -38,6 +41,32 @@ This means the two modifications were not simply additive under the tested
 architecture and training protocol.
 
 ![Best validation accuracy](results/figures/best_validation_accuracy.png)
+
+## Final Held-Out Test
+
+Model selection was performed using validation accuracy only. Mish was selected
+after reaching the highest validation accuracy in the 50-epoch benchmark.
+
+The selected epoch-47 checkpoint was then evaluated once on the official
+CIFAR-10 test set.
+
+| Metric | Result |
+| --- | ---: |
+| Selected variant | Mish |
+| Checkpoint epoch | 47 |
+| Validation accuracy | 92.48% |
+| **Official test accuracy** | **91.28%** |
+| Test loss | 0.348849 |
+| Correct predictions | 9,128 / 10,000 |
+
+The official test set was not used to rank the four variants or to revise model
+selection after evaluation. The other three variants were not evaluated on the
+test set for comparison.
+
+The machine-readable result is stored at:
+
+```text
+results/extended_50/mish/test_metrics.json
 
 ## Why This Study?
 
@@ -105,8 +134,10 @@ mean = (0.4914, 0.4822, 0.4465)
 std  = (0.2470, 0.2435, 0.2616)
 ```
 
-The official CIFAR-10 test set is not used during training, checkpoint
-selection, or comparison between variants.
+The official CIFAR-10 test set was not used during training, checkpoint
+selection, or comparison between variants. After Mish was selected using
+validation accuracy, its epoch-47 checkpoint was evaluated once on the held-out
+test set.
 
 ## Training Configuration
 
@@ -229,10 +260,12 @@ results/extended_50/
 
 Each variant contains:
 
+```markdown
+Each completed variant contains its training artifacts:
+
 ```text
 metrics.csv
 summary.json
-```
 
 Derived comparison files include:
 
@@ -297,8 +330,10 @@ The SE comparison also evaluates one specific design: block-level SE with
 reduction ratio 16. Different insertion points or reduction ratios may behave
 differently.
 
-The current results are validation results. The official CIFAR-10 test set
-remains reserved for a final held-out evaluation after model selection.
+The four-variant comparison remains validation-based. After Mish was selected,
+its epoch-47 checkpoint was evaluated once on the official CIFAR-10 test set,
+reaching 91.28% accuracy. This single held-out result is an estimate of the
+selected model's test performance, not a test-set comparison between variants.
 
 ## Legacy Course Project
 
