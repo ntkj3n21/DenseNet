@@ -1,8 +1,14 @@
 # Experiment Protocol
 
-## Official project baseline
+This document defines the experimental protocol used for the reproducible
+DenseNet-40 ablation study on CIFAR-10.
 
-The official baseline for the new project is a basic DenseNet-40 with the following architectural definition:
+The project compares the effects of Mish activation and
+Squeeze-and-Excitation (SE) under controlled training conditions.
+
+## 1. Baseline Architecture
+
+The project baseline is a basic DenseNet-40.
 
 | Parameter | Value |
 | --- | --- |
@@ -14,121 +20,44 @@ The official baseline for the new project is a basic DenseNet-40 with the follow
 | Activation | ReLU |
 | Squeeze-and-Excitation | Disabled |
 | Bottleneck | Disabled |
+| Dropout | 0.0 |
 
-The legacy implementation used compression 0.5. It is retained for historical reference and is not the official baseline of this project.
+The historical course-project implementation under `legacy/` used a different
+configuration and is preserved only for reference.
 
-## Ablation variants
+## 2. Ablation Variants
 
-- `baseline`: ReLU without SE.
-- `mish`: Mish without SE.
-- `se`: ReLU with SE.
-- `mish_se`: Mish with SE.
+Four controlled variants are evaluated.
 
-Only the activation and SE settings may differ across these variants. All other training and evaluation conditions must be shared.
+| Variant | Activation | SE |
+| --- | --- | --- |
+| `baseline` | ReLU | No |
+| `mish` | Mish | No |
+| `se` | ReLU | Yes |
+| `mish_se` | Mish | Yes |
 
-## CIFAR-10 data protocol
+Only activation and SE usage differ between variants.
 
-The official CIFAR-10 training set will be divided into 45,000 training samples
-and 5,000 validation samples. The split will be equally stratified across all
-10 classes, assigning 500 validation samples to each class, with split seed 42.
+All other architectural, dataset, training, and evaluation settings are shared
+within the same benchmark.
 
-The authoritative source of train and validation indices is the verified
-manifest at `configs/splits/cifar10_seed42.json`. All four ablation variants
-must load this exact manifest.
+For SE-enabled variants, the reduction ratio is 16 and the SE module is applied
+after each DenseBlock.
 
-- Manifest SHA-256: `454a6d5f3a72d6881c32343afb7c9c147ac018650dfe8ba1946205f386ef5557`
-- Ordered-labels SHA-256: `a3a0d804911c71de4b73015af980e237de5f82da7b1482a8efaf7adcc1722f45`
+## 3. CIFAR-10 Data Protocol
 
-Official training must load the split with
-`create_manifest_if_missing=False`. The run must stop if the manifest
-checksum, ordered-label checksum, split seed, or validation size does not
-match the locked protocol.
+The official CIFAR-10 training set contains 50,000 images.
 
-The official test set is not part of the manifest. It will remain unchanged
-and will be used only for final evaluation. It must not be used to select an
-epoch, checkpoint, or model variant.
+It is divided into:
 
-### Transform protocol
+- 45,000 training samples
+- 5,000 validation samples
+- 10,000 untouched official test samples
 
-Training uses a random 32x32 crop with padding 4, random horizontal flip,
-tensor conversion, and CIFAR-10 normalization. Validation and test use tensor
-conversion and the same normalization without stochastic augmentation.
+The validation split is class-balanced with 500 validation examples from each
+of the 10 CIFAR-10 classes.
 
-Training and validation are constructed as separate dataset wrappers so they
-can use different transforms. Both wrappers reference the same underlying
-official training split and are restricted by the same manifest indices. The
-official test set is not used during training or model selection.
+Split seed:
 
-### DataLoader protocol
-
-The training loader uses `shuffle=True`. Validation and test use
-`shuffle=False` and `drop_last=False`, preserving sequential dataset order and
-all evaluation samples. All three loaders use `worker_init_fn=seed_worker` and
-an independently seeded `torch.Generator`; no global generator is shared.
-
-Generator state advances when a loader is iterated. Exact checkpoint resume
-must eventually save and restore the training generator state. The caller must
-seed the process before constructing the model and loaders. The test loader
-must not be used during training or model selection.
-
-Batch sizes and runtime worker settings will be locked in the experiment
-configuration during the training-protocol phase. Exact reproducibility across
-PyTorch versions, hardware, and operating-system platforms is not guaranteed,
-so every run must record environment metadata.
-
-## Training engine protocol
-
-Epoch metrics consist of sample-weighted loss and top-1 accuracy. Validation
-runs with `model.eval()` under `torch.inference_mode()`, performs no backward
-pass, and must not modify model parameters. Evaluation restores the model's
-previous training or evaluation mode even when evaluation fails.
-
-An empty loader or non-finite loss is a fatal error. The official test set must
-not be evaluated during epoch training; it is reserved for final evaluation
-after validation has selected the best checkpoint. Optimizer, scheduler,
-learning rate, batch size, and epoch count remain unlocked at this stage.
-Mixed precision is not enabled in the current engine.
-
-## Locked experiment configurations
-
-The four model variants are defined in `configs/experiments/`. They must use
-the same selected configuration from `configs/training/` and exactly the same
-seed set. AMP is disabled in all currently locked training configurations.
-
-The three execution levels have distinct purposes:
-
-- `smoke` checks pipeline integration only.
-- `pilot` detects errors and estimates runtime.
-- `final` is the only level used to produce research results.
-
-Validation accuracy is the sole best-checkpoint selection metric. The official
-test set is evaluated exactly once on the best checkpoint after validation has
-completed model selection. It is never used during epoch training or variant
-selection.
-
-The final protocol must not change after official runs begin. Any change after
-that point requires a new protocol version and a new configuration set. Legacy
-accuracy values are historical course-project artifacts and are unrelated to
-results generated by this protocol.
-
-## Planned protocol
-
-1. CIFAR-10 will be the first dataset.
-2. A fixed train/validation split will be defined and reused across all variants and seeds.
-3. The test set will not be evaluated after every epoch.
-4. Validation metrics will select the best checkpoint.
-5. The test set will be used only for final evaluation after model selection.
-6. All four variants will use the same training protocol.
-7. Experiments will run with multiple random seeds.
-8. Every run will store a real `metrics.csv` file.
-9. Every run will store a configuration snapshot and environment metadata.
-10. Every run will store both the best checkpoint and the last checkpoint.
-11. Training will support resume with complete state restoration.
-12. Evaluation errors must stop the run; evaluation must never fall back to mock data.
-13. Results will not be published unless the corresponding configuration, metrics, checkpoint, and evaluation output are all available.
-
-## Protocol implementation status
-
-The model and training parameters are now locked in machine-readable
-configuration files. A runner, checkpoint manager, and results logger have not
-yet been implemented, and no official experiment has been run.
+```text
+42

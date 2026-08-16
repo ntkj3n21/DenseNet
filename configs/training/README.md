@@ -1,19 +1,49 @@
 # Training Configurations
 
-The training configurations define three execution levels that share one
-optimizer, scheduler, data, selection, and evaluation protocol.
+The training configurations define four execution levels that share the same
+dataset, model-ablation, optimizer, evaluation, and checkpoint-selection
+principles.
 
-- `smoke.json` runs one seed for one epoch and checks pipeline integration
-  only. It does not produce research results.
-- `pilot.json` runs one seed for 20 epochs to detect errors and estimate
-  runtime. It does not produce official research results.
-- `final.json` runs the five locked seeds for 200 epochs and is the only level
-  intended to produce research results.
+## Execution levels
 
-All four ablation variants must use the same selected training configuration
-and seed set. Validation accuracy alone selects the best checkpoint. The
-official test set is evaluated once, using that best checkpoint, after model
-selection. AMP is currently disabled.
+- `smoke.json`
+  - 1 epoch
+  - seed 42
+  - pipeline integration check only
+  - not used for performance conclusions
 
-Once official final runs begin, this protocol must not change. Any subsequent
-change requires a new explicitly versioned protocol and configuration set.
+- `pilot.json`
+  - 20 epochs
+  - seed 42
+  - completed
+  - used as a preliminary benchmark and runtime estimate
+
+- `extended_50.json`
+  - 50 epochs
+  - seed 42
+  - completed
+  - main portfolio benchmark reported in `docs/RESULTS.md`
+
+- `final.json`
+  - 200 epochs
+  - seeds 42, 123, 2024, 3407, and 9999
+  - originally designed as a larger research-scale protocol
+  - not executed as part of the current portfolio study
+
+All four ablation variants must use the same training configuration within a
+given execution level.
+
+Validation accuracy is the checkpoint-selection metric. The official CIFAR-10
+test set is not used during epoch training or variant selection.
+
+The completed pilot and extended benchmark results are stored under `results/`.
+Raw result artifacts are preserved separately from derived summary tables and
+figures.
+
+The current portfolio conclusions are based on the completed 50-epoch,
+single-seed benchmark. They should not be interpreted as multi-seed statistical
+evidence.
+
+Any future experiment that changes the training protocol should use a new,
+explicitly versioned configuration rather than modifying completed benchmark
+conditions retroactively.
