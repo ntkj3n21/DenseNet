@@ -1,0 +1,5 @@
+variant,parameters,pilot_best_validation_accuracy,pilot_best_epoch,extended_best_validation_accuracy,extended_best_epoch,gain_20_to_50_pp,extended_delta_vs_baseline_pp,extended_final_validation_accuracy,extended_elapsed_minutes
+baseline,1019722,0.898,19,0.9186,44,2.06,0.0,0.9166,86.77
+mish,1019722,0.8964,19,0.9248,47,2.84,0.62,0.9234,92.4
+se,1060531,0.8898,17,0.9182,46,2.84,-0.04,0.9172,97.41
+mish_se,1060531,0.9016,19,0.9216,49,2.0,0.3,0.9212,104.41

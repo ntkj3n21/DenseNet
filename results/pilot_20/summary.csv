@@ -1,0 +1,5 @@
+variant,seed,epochs,parameters,best_epoch,best_validation_accuracy,delta_vs_baseline_pp,final_train_accuracy,final_validation_accuracy,final_validation_loss,elapsed_seconds,elapsed_minutes
+baseline,42,20,1019722,19,0.898,0.0,0.9471,0.897,0.323596,1989.879,33.16
+mish,42,20,1019722,19,0.8964,-0.16,0.9401,0.8956,0.31724,2377.805,39.63
+se,42,20,1060531,17,0.8898,-0.82,0.9411,0.889,0.33002,2090.745,34.85
+mish_se,42,20,1060531,19,0.9016,0.36,0.9414,0.9008,0.306942,2198.551,36.64
