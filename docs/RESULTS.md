@@ -122,15 +122,43 @@ Training time also increased across the variants:
 
 In this benchmark, Mish provides the strongest accuracy-efficiency trade-off: it achieves the highest validation accuracy without increasing parameter count. The SE variants increase both model size and runtime without surpassing Mish alone.
 
-## 8. Limitations
+## 8. Final Held-Out Test Evaluation
 
-The main limitation is that the completed benchmark uses a single random seed. Differences such as 0.30 or 0.62 percentage points may vary across repeated runs.
+After completing the validation-based comparison, Mish was selected as the
+final model because it achieved the highest validation accuracy in the
+50-epoch benchmark.
 
-The current study also evaluates only one SE design: block-level insertion with reduction ratio 16. Alternative SE placement, reduction ratios, or attention mechanisms may produce different outcomes.
+The selected checkpoint was:
 
-The 50-epoch benchmark was chosen as a practical portfolio-scale experiment. A larger multi-seed and longer-training study would provide stronger statistical evidence but would require substantially more compute.
+| Field | Value |
+| --- | --- |
+| Variant | Mish |
+| Seed | 42 |
+| Checkpoint epoch | 47 |
+| Parameters | 1,019,722 |
+| Best validation accuracy | 92.48% |
 
-Finally, the results reported here are validation results. The CIFAR-10 official test set has not been used for variant selection and remains reserved for final held-out evaluation.
+Only this preselected checkpoint was evaluated on the official CIFAR-10 test
+set. The test set was not used to rank the four variants or to change the
+selected model.
+
+| Metric | Result |
+| --- | ---: |
+| Test accuracy | **91.28%** |
+| Test loss | 0.348849 |
+| Correct predictions | 9,128 / 10,000 |
+
+The held-out test accuracy is 1.20 percentage points below the checkpoint's
+92.48% validation accuracy.
+
+This result should be interpreted as the final held-out performance estimate
+for the validation-selected Mish model under the current single-seed
+experimental protocol. It is not a four-variant test-set comparison.
+
+The machine-readable evaluation artifact is stored at:
+
+```text
+results/extended_50/mish/test_metrics.json
 
 ## 9. Result Artifacts
 
