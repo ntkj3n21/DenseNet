@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "dataset": "cifar10",
+  "split": "official_test",
+  "evaluation_role": "held_out_final",
+  "variant": "mish",
+  "seed": 42,
+  "checkpoint_epoch": 47,
+  "checkpoint_validation_accuracy": 0.9248,
+  "parameters": 1019722,
+  "test_loss": 0.348849,
+  "test_accuracy": 0.9128,
+  "test_num_samples": 10000,
+  "test_num_correct": 9128
+}
