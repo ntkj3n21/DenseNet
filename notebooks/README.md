@@ -1,5 +1,11 @@
 # Notebooks
 
-Notebooks will be limited to Google Colab wrappers and post-run analysis. They may invoke the same Python command-line scripts used in other environments.
+This directory is reserved for Google Colab wrappers and exploratory
+post-run analysis.
 
-Notebooks must not contain model implementations, the primary training loop, or the authoritative evaluation logic.
+Authoritative experiment logic does not live in notebooks. Model
+implementations, dataset construction, training and evaluation behavior, and
+reproducibility utilities are maintained in:
+
+```text
+src/densenet_experiments/
