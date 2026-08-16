@@ -1,9 +1,20 @@
-# Command-Line Scripts
+# Utility Scripts
 
-This directory will contain thin command-line entry points for:
+This directory contains lightweight command-line utilities for working with
+the tracked experiment artifacts.
 
-- `train`: run or resume one configured training experiment.
-- `evaluate`: evaluate a selected checkpoint using the locked protocol.
-- `aggregate_results`: combine verified run artifacts across variants and seeds.
+The model architecture, training loop, evaluation logic, dataset construction,
+and reproducibility utilities remain implemented in
+`src/densenet_experiments/`. Scripts in this directory are thin utilities
+rather than alternative implementations of the experimental pipeline.
 
-The scripts will call reusable package code from `src/densenet_experiments`. No Python scripts are implemented at this stage.
+## `aggregate_results.py`
+
+Regenerates and verifies the derived benchmark CSV tables from the raw
+per-run artifacts:
+
+```text
+results/pilot_20/<variant>/metrics.csv
+results/pilot_20/<variant>/summary.json
+results/extended_50/<variant>/metrics.csv
+results/extended_50/<variant>/summary.json
