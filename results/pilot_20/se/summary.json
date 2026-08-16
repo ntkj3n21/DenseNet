@@ -1,0 +1,11 @@
+{
+  "status": "completed",
+  "variant": "se",
+  "seed": 42,
+  "target_epochs": 20,
+  "completed_epochs": 20,
+  "parameters": 1060531,
+  "best_epoch": 17,
+  "best_validation_accuracy": 0.8898,
+  "elapsed_seconds": 2090.7453165710003
+}

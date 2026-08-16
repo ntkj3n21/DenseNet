@@ -1,0 +1,11 @@
+{
+  "status": "completed",
+  "variant": "mish_se",
+  "seed": 42,
+  "target_epochs": 20,
+  "completed_epochs": 20,
+  "parameters": 1060531,
+  "best_epoch": 19,
+  "best_validation_accuracy": 0.9016,
+  "elapsed_seconds": 2198.551260902
+}

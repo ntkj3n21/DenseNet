@@ -1,0 +1,14 @@
+{
+  "status": "completed",
+  "experiment": "extended_50",
+  "variant": "mish",
+  "seed": 42,
+  "target_epochs": 50,
+  "completed_epochs": 50,
+  "parameters": 1019722,
+  "best_epoch": 47,
+  "best_validation_accuracy": 0.9248,
+  "current_validation_accuracy": 0.9234,
+  "current_validation_loss": 0.294493347454071,
+  "elapsed_seconds": 5544.018919401001
+}

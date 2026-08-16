@@ -1,0 +1,9 @@
+{
+  "variant": "mish",
+  "seed": 42,
+  "epochs": 20,
+  "parameters": 1019722,
+  "best_epoch": 19,
+  "best_validation_accuracy": 0.8964,
+  "elapsed_seconds": 2377.805039409
+}

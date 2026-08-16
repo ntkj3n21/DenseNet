@@ -1,0 +1,14 @@
+{
+  "status": "completed",
+  "experiment": "extended_50",
+  "variant": "se",
+  "seed": 42,
+  "target_epochs": 50,
+  "completed_epochs": 50,
+  "parameters": 1060531,
+  "best_epoch": 46,
+  "best_validation_accuracy": 0.9182,
+  "current_validation_accuracy": 0.9172,
+  "current_validation_loss": 0.31542513194084165,
+  "elapsed_seconds": 5844.4121674670005
+}
