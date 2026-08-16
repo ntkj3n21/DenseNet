@@ -44,7 +44,10 @@ def _write(repository: Path, relative_path: str, value: dict[str, Any]) -> None:
 
 
 @pytest.mark.parametrize("variant", ["baseline", "mish", "se", "mish_se"])
-@pytest.mark.parametrize("training", ["smoke", "pilot", "final"])
+@pytest.mark.parametrize(
+    "training",
+    ["smoke", "pilot", "extended_50", "final"],
+)
 def test_all_variant_and_training_combinations_load(
     repository: Path, variant: str, training: str
 ) -> None:
